@@ -1,0 +1,15 @@
+(() => {
+  const TOTAL=28; let page=1, zoom=1;
+  const $=id=>document.getElementById(id);
+  const home=$("home"), contents=$("contents"), viewer=$("viewer"), img=$("pageImage"), indicator=$("pageIndicator");
+  function show(el){el.classList.remove("hidden")} function hide(el){el.classList.add("hidden")}
+  function setPage(n){page=Math.max(1,Math.min(TOTAL,n));img.src=`assets/page-${String(page).padStart(2,"0")}.jpg`;img.alt=`Museum Posters and Models — page ${page} of ${TOTAL}`;indicator.textContent=`Page ${page} of ${TOTAL}`;$("prevBtn").disabled=page===1;$("nextBtn").disabled=page===TOTAL;location.hash=`page=${page}`}
+  function openViewer(n=1){hide(home);hide(contents);show(viewer);setPage(n);window.scrollTo({top:0,behavior:"smooth"})}
+  function openContents(){hide(home);hide(viewer);show(contents);render("");window.scrollTo({top:0,behavior:"smooth"})}
+  function render(q){const root=$("contentsList");root.innerHTML="";const needle=q.trim().toLowerCase();for(const sec of window.MUSEUM_ITEMS){const matches=sec.items.filter(x=>(x.name+" "+x.description.join(" ")).toLowerCase().includes(needle));if(!matches.length)continue;const h=document.createElement("h3");h.className="group-title";h.textContent=sec.title;root.appendChild(h);for(const x of matches){const b=document.createElement("button");b.className="item";b.innerHTML=`<div class="item-top"><span class="num">${x.no}</span><div><div class="item-name">${esc(x.name)}</div><div class="item-page">Page ${x.page}</div></div></div><div class="desc">${x.description.map(esc).join(" ")}</div>`;b.onclick=()=>openViewer(x.page);root.appendChild(b)}}if(!root.children.length)root.innerHTML='<p>No matching poster or model found.</p>'}
+  function esc(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
+  $("openBtn").onclick=()=>openViewer(1);$("contentsBtn").onclick=openContents;$("closeContents").onclick=()=>{hide(contents);show(home)};$("backBtn").onclick=openContents;$("prevBtn").onclick=()=>setPage(page-1);$("nextBtn").onclick=()=>setPage(page+1);$("search").oninput=e=>render(e.target.value);
+  $("zoomIn").onclick=()=>{zoom=Math.min(2.5,zoom+.25);img.style.width=`${Math.round(zoom*100)}%`;$("zoomReset").textContent=`${Math.round(zoom*100)}%`};$("zoomOut").onclick=()=>{zoom=Math.max(.5,zoom-.25);img.style.width=`${Math.round(zoom*100)}%`;$("zoomReset").textContent=`${Math.round(zoom*100)}%`};$("zoomReset").onclick=()=>{zoom=1;img.style.width="100%";$("zoomReset").textContent="100%"};
+  let sx=0; $("pageStage").addEventListener("touchstart",e=>{sx=e.changedTouches[0].screenX},{passive:true});$("pageStage").addEventListener("touchend",e=>{const dx=e.changedTouches[0].screenX-sx;if(Math.abs(dx)>60){if(dx<0)setPage(page+1);else setPage(page-1)}});
+  const m=location.hash.match(/page=(\d+)/); if(m)openViewer(Number(m[1])); else show(home);
+})();
