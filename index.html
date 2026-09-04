@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b5c75">
+<meta name="description" content="Museum Posters and Models — mobile catalogue viewer">
+<title>Museum Posters and Models</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar"><div class="brand"><span class="brandmark">🦷</span><span>Museum Posters and Models</span></div><button id="contentsBtn" class="ghost">Contents</button></header>
+<main>
+<section id="home" class="hero"><div class="hero-card"><div class="eyebrow">DIGITAL MUSEUM CATALOGUE</div><h1>Museum Posters and Models</h1><p>Explore the complete 28-page museum catalogue on your phone.</p><button id="openBtn" class="primary">Open Document</button></div></section>
+<section id="contents" class="panel hidden"><div class="section-head"><div><div class="eyebrow">INDEX</div><h2>Contents</h2></div><button id="closeContents" class="ghost">Close</button></div><input id="search" class="search" type="search" placeholder="Search posters, models or descriptions…" autocomplete="off"><div id="contentsList"></div></section>
+<section id="viewer" class="viewer hidden"><div class="viewer-head"><button id="backBtn" class="ghost">← Contents</button><div class="page-indicator" id="pageIndicator">Page 1 of 28</div><div class="zoom"><button id="zoomOut">−</button><button id="zoomReset">100%</button><button id="zoomIn">+</button></div></div><div id="pageStage" class="page-stage"><img id="pageImage" alt="Museum catalogue page"></div><div class="nav"><button id="prevBtn" class="primary secondary">← Previous</button><button id="nextBtn" class="primary secondary">Next →</button></div><p class="hint">Swipe left/right to change pages. Pinch to zoom on supported phones.</p></section>
+</main>
+<footer>28-page digital catalogue • No app installation required</footer>
+<script src="config.js"></script><script src="data/items.js"></script><script src="app.js"></script>
+</body></html>
