@@ -1,5 +1,5 @@
 (() => {
-  const TOTAL=28; let page=1, zoom=1;
+  const TOTAL=61; let page=1, zoom=1;
   const $=id=>document.getElementById(id);
   const home=$("home"), contents=$("contents"), viewer=$("viewer"), img=$("pageImage"), indicator=$("pageIndicator");
   function show(el){el.classList.remove("hidden")} function hide(el){el.classList.add("hidden")}
